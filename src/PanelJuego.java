@@ -16,8 +16,8 @@ public class PanelJuego extends JPanel implements Runnable {
 	Image image;
 	Graphics graphics;
 	Random random;
-	Raqueta raqueta1;
-	Raqueta raqueta2;
+	Raqueta pala1;
+	Raqueta pala2;
 	Bola bola;
 	Puntos puntos;
 
@@ -41,7 +41,9 @@ public class PanelJuego extends JPanel implements Runnable {
 	// Crea nuevas palas para los jugadores en caso de que queramos resetear las
 	// actuales.
 	public void newPala() {
-		
+		pala1 = new Raqueta(0,(GAME_HEIGHT/2)-(RAQUETA_HEIGHT/2),RAQUETA_WIDTH,RAQUETA_HEIGHT,1);
+		pala2 = new Raqueta((GAME_WIDTH-RAQUETA_WIDTH),(GAME_HEIGHT/2)-(RAQUETA_HEIGHT/2),RAQUETA_WIDTH,RAQUETA_HEIGHT,2);
+	
 	}
 
 	// Pinta cosas en pantalla
@@ -53,7 +55,8 @@ public class PanelJuego extends JPanel implements Runnable {
 	}
 
 	public void draw(Graphics g) {
-
+		pala1.draw(g);
+		pala2.draw(g);
 	}
 
 	// Mueve cosas
@@ -83,7 +86,7 @@ public class PanelJuego extends JPanel implements Runnable {
 				checkColision();
 				repaint();
 				delta--;
-				System.out.println("hola");
+				//System.out.println("hola");
 			}
 		}
 	}
