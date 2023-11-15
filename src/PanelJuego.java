@@ -68,7 +68,24 @@ public class PanelJuego extends JPanel implements Runnable {
 
 	// Runea el juego
 	public void run() {
-
+		//Bucle del juego.
+		long lastTime = System.nanoTime();
+		double numTicks = 60.0;
+		double ns = 1000000000 / numTicks;
+		double delta = 0;
+		boolean funcionando = true;
+		while(funcionando) {
+			long now = System.nanoTime();
+			delta += (now - lastTime)/ns;
+			lastTime = now;
+			if(delta>=1) {
+				move();
+				checkColision();
+				repaint();
+				delta--;
+				System.out.println("hola");
+			}
+		}
 	}
 
 	public class AL extends KeyAdapter {
