@@ -10,8 +10,8 @@ public class PanelJuego extends JPanel implements Runnable {
 	static final int GAME_HEIGHT = (int)(GAME_WIDTH * (0.5625));
 	static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 	static final int BALL_DIMAETER = 20;
-	static final int RAQUETA_WIDTH = 25;
-	static final int RAQUETA_HEIGHT = 100;
+	static final int RAQUETA_WIDTH = 20;
+	static final int RAQUETA_HEIGHT = 125;
 	Thread juegoThread;
 	Image image;
 	Graphics graphics;
@@ -41,8 +41,8 @@ public class PanelJuego extends JPanel implements Runnable {
 	// Crea nuevas palas para los jugadores en caso de que queramos resetear las
 	// actuales.
 	public void newPala() {
-		pala1 = new Raqueta(0,(GAME_HEIGHT/2)-(RAQUETA_HEIGHT/2),RAQUETA_WIDTH,RAQUETA_HEIGHT,1);
-		pala2 = new Raqueta((GAME_WIDTH-RAQUETA_WIDTH),(GAME_HEIGHT/2)-(RAQUETA_HEIGHT/2),RAQUETA_WIDTH,RAQUETA_HEIGHT,2);
+		pala1 = new Raqueta(10,(GAME_HEIGHT/2)-(RAQUETA_HEIGHT/2),RAQUETA_WIDTH,RAQUETA_HEIGHT,1);
+		pala2 = new Raqueta((GAME_WIDTH-RAQUETA_WIDTH)-10,(GAME_HEIGHT/2)-(RAQUETA_HEIGHT/2),RAQUETA_WIDTH,RAQUETA_HEIGHT,2);
 	
 	}
 
