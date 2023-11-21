@@ -111,6 +111,19 @@ public class PanelJuego extends JPanel implements Runnable {
 			bola.y = GAME_HEIGHT-BOLA_DIMAETER;
 			bola.setYDirection(-bola.yVelocity);
 		}
+		//Bola choca con palas
+		if(pala1.intersects(bola)) {
+			bola.xVelocity = Math.abs(bola.xVelocity);
+			bola.setXDirection(bola.xVelocity);
+		}
+		if(pala2.intersects(bola)) {
+			bola.xVelocity = Math.abs(bola.xVelocity);
+			bola.setXDirection(-bola.xVelocity);
+		}
+		//Bola nueva, cuando toca una pared
+		if(bola.x == 0 || bola.x == GAME_WIDTH-BOLA_DIMAETER) {
+			newBola();
+		}
 	}
 
 	// Runea el juego

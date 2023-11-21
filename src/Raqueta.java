@@ -8,7 +8,7 @@ public class Raqueta extends Rectangle {
 	int id;// 1 o 2 para los jugadores
 	int yVelocity;
 	int xVelocity;
-	int velocidad = 10;
+	int velocidad = 5;
 	/*
 	 * Posicion x, Posicion y, Ancho, Alto e Identificador
 	 */
@@ -138,4 +138,5 @@ public class Raqueta extends Rectangle {
 		}
 		g.fillRect(this.x, this.y, this.width, this.height);
 	}
-}
+	}
+	
