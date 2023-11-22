@@ -14,6 +14,7 @@ public class Raqueta extends Rectangle {
 	 */
 	public Raqueta(int x, int y, int width, int height, int id) {
 		super(x,y,width,height);
+		
 		this.id = id;
 	}
 
@@ -133,6 +134,7 @@ public class Raqueta extends Rectangle {
 	public void draw(Graphics g) {
 		if(id==1) {
 			g.setColor(Color.MAGENTA);
+		
 		}else {
 			g.setColor(Color.YELLOW);
 		}

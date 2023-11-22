@@ -11,7 +11,7 @@ public class PanelJuego extends JPanel implements Runnable {
 	static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 	static final int BOLA_DIMAETER = 20;
 	static final int RAQUETA_WIDTH = 20;
-	static final int RAQUETA_HEIGHT = 125;
+	static final int RAQUETA_HEIGHT = 69;
 	Thread juegoThread;
 	Image image;
 	Graphics graphics;
@@ -113,6 +113,15 @@ public class PanelJuego extends JPanel implements Runnable {
 			bola.y = GAME_HEIGHT-BOLA_DIMAETER;
 			bola.setYDirection(-bola.yVelocity);
 		}
+		//Linea Medio campo
+		
+		if (pala1.x >= ((GAME_WIDTH/2 - RAQUETA_WIDTH)))
+			pala1.x = (GAME_WIDTH/2 - RAQUETA_WIDTH);
+
+	
+		if (pala2.x <= (GAME_WIDTH/2))
+			pala2.x = (GAME_WIDTH/2);
+		
 		//Bola choca con palas
 		if(pala1.intersects(bola)) {
 			bola.xVelocity = Math.abs(bola.xVelocity);
@@ -126,16 +135,24 @@ public class PanelJuego extends JPanel implements Runnable {
 		if(bola.x == 0) {
 			newBola();
 			puntos.score(1);
+			//posicionStart();
+			
 		}
 		if(bola.x == GAME_WIDTH-BOLA_DIMAETER) {
 			newBola();
 			puntos.score(2);
+			//posicionStart();
 		}
+	}
+	//Poner todo en sus posiciones iniciales.
+	public void posicionStart() {
+		newPala();
+		newBola();
 	}
 
 	// Runea el juego
 	public void run() {
-		// Bucle del juego.
+		// Bucle del juego. --> Cada X tiempo redibuja.
 		long lastTime = System.nanoTime();
 		double numTicks = 120.0;
 		double ns = 1000000000 / numTicks;

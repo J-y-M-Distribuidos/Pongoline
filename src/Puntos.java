@@ -18,13 +18,17 @@ public class Puntos extends Rectangle {
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(Color.WHITE);
-		g.drawLine(GAME_WIDTH/2, 0, GAME_WIDTH/2, GAME_HEIGHT);
-		g.setColor(Color.MAGENTA);
-		g.setFont(new Font("Verdana",Font.BOLD,48));
-		g.drawString(String.valueOf(jugador1 /10) +String.valueOf(jugador1 %10) , GAME_WIDTH/2 -85, GAME_HEIGHT*1/8);
-		g.setColor(Color.YELLOW);
-		g.drawString(String.valueOf(jugador2 /10) +String.valueOf(jugador2 %10) , GAME_WIDTH/2 +15, GAME_HEIGHT*1/8);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setColor(Color.white);
+		g2d.setFont(new Font("Comic sans",Font.PLAIN,60));
+		
+        Stroke dashed = new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{25}, 30);
+        g2d.setStroke(dashed);
+        g2d.drawLine(GAME_WIDTH/2, 0, GAME_WIDTH/2, GAME_HEIGHT);
+        g2d.setColor(Color.MAGENTA);
+		g2d.drawString(String.valueOf(jugador2/10)+String.valueOf(jugador2%10), (GAME_WIDTH/2)-85, 50);
+		g2d.setColor(Color.YELLOW);
+		g2d.drawString(String.valueOf(jugador1/10)+String.valueOf(jugador1%10), (GAME_WIDTH/2)+20, 50);
 
 	}
 
