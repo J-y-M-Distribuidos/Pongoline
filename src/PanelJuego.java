@@ -24,7 +24,7 @@ public class PanelJuego extends JPanel implements Runnable {
 	public PanelJuego() {
 		newPala();
 		newBola();
-		Puntos puntos = new Puntos(GAME_WIDTH, GAME_HEIGHT);
+		puntos = new Puntos(GAME_WIDTH, GAME_HEIGHT);
 		this.setFocusable(true); // Puede leer pulsaciones de teclas
 		this.addKeyListener(new AL());
 		this.setPreferredSize(SCREEN_SIZE);
@@ -58,9 +58,11 @@ public class PanelJuego extends JPanel implements Runnable {
 
 	// dibuja en pantalla
 	public void draw(Graphics g) {
+		puntos.draw(g);
 		pala1.draw(g);
 		pala2.draw(g);
 		bola.draw(g);
+		
 	}
 
 	// Vamos a hacer que el movimiento de las palas no sea caca.
@@ -120,9 +122,14 @@ public class PanelJuego extends JPanel implements Runnable {
 			bola.xVelocity = Math.abs(bola.xVelocity);
 			bola.setXDirection(-bola.xVelocity);
 		}
-		//Bola nueva, cuando toca una pared
-		if(bola.x == 0 || bola.x == GAME_WIDTH-BOLA_DIMAETER) {
+		//Bola nueva, cuando toca una pared y asigna puntos.
+		if(bola.x == 0) {
 			newBola();
+			puntos.score(1);
+		}
+		if(bola.x == GAME_WIDTH-BOLA_DIMAETER) {
+			newBola();
+			puntos.score(2);
 		}
 	}
 
