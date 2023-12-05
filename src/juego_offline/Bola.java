@@ -8,7 +8,7 @@ public class Bola extends Rectangle{
 	Random random;
 	int xVelocity;
 	int yVelocity;
-	int velocidad = 4;
+	int velocidad = 2;
 	
 	public Bola(int x, int y, int diametro) {
 		super(x,y,diametro,diametro);
