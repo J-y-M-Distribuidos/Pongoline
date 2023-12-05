@@ -1,3 +1,4 @@
+package juego_offline;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
