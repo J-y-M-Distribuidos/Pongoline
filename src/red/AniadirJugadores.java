@@ -19,7 +19,7 @@ public class AniadirJugadores implements Runnable {
 		try (BufferedReader buffin = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				ObjectOutputStream oout = new ObjectOutputStream(socket.getOutputStream());){
 			//Recibimos los datos del jugador y los añadimos a la lista de jugadores del servidor.
-			String ipJ = buffin .readLine();
+			String ipJ = this.socket.getInetAddress().toString().split("/")[1]; //Asi no pueden pasarnos otra ip que no sea la suya.
 			String puertoJ = buffin.readLine();
 			String nickJ = buffin.readLine();
 			int clave = this.servidor.getListaJugadores().size();
