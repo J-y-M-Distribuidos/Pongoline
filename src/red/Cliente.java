@@ -39,10 +39,7 @@ public class Cliente {
 		}
 		//Despues de recibir la lista y elegir un jugador, esperamos a poder conectarnos/recibir
 		ExecutorService pool = Executors.newCachedThreadPool();
-		MandarSolicitudConex esperar = new MandarSolicitudConex(c);
-		ConectarConJugador conectar = new ConectarConJugador(c);
-		pool.execute(conectar);
-		pool.execute(esperar);
+		menu(pool, c);
 	}
 
 	// PRE: Las variables estaticas ip y miPuerto ya tienen un valor asignado.
@@ -69,6 +66,49 @@ public class Cliente {
 	            System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
 	        }
 		}else System.out.println("No hay jugadores conectados.");	
+	}
+	private static void mostrar_lista_invitaciones() {
+		System.out.println("_________________________________________________\n    LISTA DE SOLICITUDES\n_________________________________________________");
+		if(listaJugadores != null) {
+			for (Entry<Integer, List<String>> entry : listaInvitaciones.entrySet()) {
+	            System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
+	        }
+		}else System.out.println("No hay invitaciones disponibles");	
+	}
+	public static void menu(ExecutorService pool, Cliente c) {
+		Boolean salir = false;
+		while(!salir) {
+			System.out.println("MOSTRAR LISTA INVITACIONES: 0\nMOSTRAR LISTA DISPONIBLES: 1\nMANDAR SOLICITUD: 2\nACEPTAR sOLICITUD: 3\n SALIR: [4-9]");
+			Scanner scan = new Scanner(System.in);
+			
+			switch(scan.nextInt()) {
+			case 0:
+				mostrar_lista_jugadores();
+				break;
+			case 1:
+				mostrar_lista_invitaciones();
+				break;
+			case 2://MandarSolicitud
+				System.out.println("Numero del jugador: ");
+				int n2 = scan.nextInt();
+				int puertoJ2 = Integer.parseInt(listaJugadores.get(n2).get(0));
+				String ipJ2 = listaJugadores.get(n2).get(1);
+				MandarSolicitudConex solicitud2 = new MandarSolicitudConex(c, ipJ2, puertoJ2);
+				pool.execute(solicitud2);
+				break;
+			case 3://AceptarSolicitud
+				System.out.println("Numero del jugador: ");
+				int n3 = scan.nextInt();
+				int puertoJ3 = Integer.parseInt(listaInvitaciones.get(n3).get(0));
+				String ipJ3 = listaInvitaciones.get(n3).get(1);
+				ConectarConJugador concectar3 = new ConectarConJugador(c, ipJ3, puertoJ3);
+				pool.execute(concectar3);
+				break;
+			default:
+				salir = true;
+			}
+		}System.exit(0);
+		
 	}
 	public Boolean getDisponible() {
 		return this.disponible;
