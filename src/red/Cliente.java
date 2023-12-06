@@ -29,7 +29,7 @@ public class Cliente {
 			System.out.println("Escribe tu nickname: ");
 			String nickn = scanner.nextLine();
 			conectarse_y_listaJ(nickn, dout, ooin);
-			
+
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,88 +37,107 @@ public class Cliente {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Despues de recibir la lista y elegir un jugador, esperamos a poder conectarnos/recibir
+		// Despues de recibir la lista y elegir un jugador, esperamos a poder
+		// conectarnos/recibir
 		ExecutorService pool = Executors.newCachedThreadPool();
 		menu(pool, c);
 	}
 
 	// PRE: Las variables estaticas ip y miPuerto ya tienen un valor asignado.
-	// POS: Establece una conexión con el servidor y recibe una lista de los jugadores conectados.
-	//La excepcion IO es gestionada fuera del metodo, en el main.
-	private static void conectarse_y_listaJ(String nick, DataOutputStream dout, ObjectInputStream ooin) throws IOException {
-		//dout.writeBytes(ip + "\n");
+	// POS: Establece una conexión con el servidor y recibe una lista de los
+	// jugadores conectados.
+	// La excepcion IO es gestionada fuera del metodo, en el main.
+	private static void conectarse_y_listaJ(String nick, DataOutputStream dout, ObjectInputStream ooin)
+			throws IOException {
+		// dout.writeBytes(ip + "\n");
 		dout.writeBytes(miPuerto + "\n");
 		dout.writeBytes(nick + "\n");
 		try {
-			System.out.println("Conexion correcta: " + ((listaJugadores = (HashMap<Integer, List<String>>) ooin.readObject() )!= null));
-			 mostrar_lista_jugadores();
+			System.out.println("Conexion correcta: "
+					+ ((listaJugadores = (HashMap<Integer, List<String>>) ooin.readObject()) != null));
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	private static void mostrar_lista_jugadores() {
-		System.out.println("_________________________________________________\n    LISTA DE JUGADORES CONECTADOS\n_________________________________________________");
-		if(listaJugadores != null) {
-			for (Entry<Integer, List<String>> entry : listaJugadores.entrySet()) {
-	            System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
-	        }
-		}else System.out.println("No hay jugadores conectados.");	
-	}
-	private static void mostrar_lista_invitaciones() {
-		System.out.println("_________________________________________________\n    LISTA DE SOLICITUDES\n_________________________________________________");
-		if(listaJugadores != null) {
-			for (Entry<Integer, List<String>> entry : listaInvitaciones.entrySet()) {
-	            System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
-	        }
-		}else System.out.println("No hay invitaciones disponibles");	
-	}
+
 	public static void menu(ExecutorService pool, Cliente c) {
 		Boolean salir = false;
-		while(!salir) {
-			System.out.println("MOSTRAR LISTA INVITACIONES: 0\nMOSTRAR LISTA DISPONIBLES: 1\nMANDAR SOLICITUD: 2\nACEPTAR sOLICITUD: 3\n SALIR: [4-9]");
+		while (!salir) {
+			System.out.println("|||||||||||||||||||||||||||||||||||||||||||||");
+			System.out.println(
+					"[ 0 ] -  MOSTRAR LISTA JUGADORES DISPONIBLES \n[ 1 ] -  MOSTRAR LISTA INVITACIONES \n[ 2 ] -  MANDAR SOLICITUD\n[ 3 ] -  ACEPTAR sOLICITUD\n[4 - 9] -  SALIR");
+			System.out.println("|||||||||||||||||||||||||||||||||||||||||||||");
 			Scanner scan = new Scanner(System.in);
-			
-			switch(scan.nextInt()) {
+
+			switch (scan.nextInt()) {
 			case 0:
 				mostrar_lista_jugadores();
 				break;
 			case 1:
 				mostrar_lista_invitaciones();
 				break;
-			case 2://MandarSolicitud
+			case 2:// MandarSolicitud
 				System.out.println("Numero del jugador: ");
 				int n2 = scan.nextInt();
-				int puertoJ2 = Integer.parseInt(listaJugadores.get(n2).get(0));
-				String ipJ2 = listaJugadores.get(n2).get(1);
+				int puertoJ2 = Integer.parseInt(listaJugadores.get(n2).get(1));
+				String ipJ2 = listaJugadores.get(n2).get(0);
 				MandarSolicitudConex solicitud2 = new MandarSolicitudConex(c, ipJ2, puertoJ2);
 				pool.execute(solicitud2);
 				break;
-			case 3://AceptarSolicitud
+			case 3:// AceptarSolicitud
 				System.out.println("Numero del jugador: ");
 				int n3 = scan.nextInt();
-				int puertoJ3 = Integer.parseInt(listaInvitaciones.get(n3).get(0));
-				String ipJ3 = listaInvitaciones.get(n3).get(1);
+				int puertoJ3 = Integer.parseInt(listaInvitaciones.get(n3).get(1));
+				String ipJ3 = listaInvitaciones.get(n3).get(0);
 				ConectarConJugador concectar3 = new ConectarConJugador(c, ipJ3, puertoJ3);
 				pool.execute(concectar3);
 				break;
 			default:
 				salir = true;
 			}
-		}System.exit(0);
-		
+		}
+		System.exit(0);
+
 	}
+
+	private static void mostrar_lista_jugadores() {
+		System.out.println(
+				"_________________________________________________\n    LISTA DE JUGADORES CONECTADOS");
+		if (listaJugadores != null) {
+			for (Entry<Integer, List<String>> entry : listaJugadores.entrySet()) {
+				System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
+			}
+			System.out.println("_________________________________________________\n");
+		} else
+			System.out.println("No hay jugadores conectados.");
+	}
+
+	private static void mostrar_lista_invitaciones() {
+		System.out.println(
+				"_________________________________________________\n    LISTA DE SOLICITUDES");
+		if (listaInvitaciones != null) {
+			for (Entry<Integer, List<String>> entry : listaInvitaciones.entrySet()) {
+				System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
+			}
+		} else
+			System.out.println("No hay invitaciones disponibles");
+		System.out.println("_________________________________________________\n");
+	}
+
 	public Boolean getDisponible() {
 		return this.disponible;
 	}
+
 	public void setDisponible(Boolean disponibilidad) {
 		this.disponible = disponibilidad;
 	}
+
 	public int getPuerto() {
 		return miPuerto;
 	}
+
 	public String getip() {
 		return ip;
 	}
