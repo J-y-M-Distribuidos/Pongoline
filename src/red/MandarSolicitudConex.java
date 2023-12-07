@@ -2,17 +2,23 @@ package red;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
 
 public class MandarSolicitudConex implements Runnable {
 
 	private Cliente mi_cliente;
 	private String ipExt;
 	private int portExt;
+	private static ExecutorService pool;
 
-	public MandarSolicitudConex(Cliente clientei, String ip, int puerto) {
+	public MandarSolicitudConex(Cliente clientei, String ip, int puerto, ExecutorService poolHilos) {
 		this.mi_cliente = clientei;
 		this.ipExt = ip;
 		this.portExt = puerto;
+		pool = poolHilos;
 	}
 
 	@Override
@@ -20,7 +26,32 @@ public class MandarSolicitudConex implements Runnable {
 
 		try (Socket s = new Socket(ipExt, portExt);
 				BufferedReader buffIn = new BufferedReader(new InputStreamReader(s.getInputStream()));
-				DataOutputStream dout = new DataOutputStream(s.getOutputStream());) {
+				ObjectOutputStream oout = new ObjectOutputStream(s.getOutputStream());) {
+			ArrayList<String> misDatos = new ArrayList<String>();
+			misDatos.add(mi_cliente.getip());
+			misDatos.add(String.valueOf(mi_cliente.getPuerto()));
+			misDatos.add(mi_cliente.getNick());
+			
+			oout.writeObject(misDatos);//Jugamos?
+			
+
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {// Espera 5 minutos a que me acepte, sino me voy.
+
+				@Override
+				public void run() {
+					System.out.println("No quiere jugar conmigo, me voy :(");
+					System.exit(0);
+
+				}
+			}, 5 * 60 * 100);
+			
+			String res = buffIn.readLine();
+			if (res == "Si") {
+				timer.cancel();
+				EnviarDatosJuego mandar = new EnviarDatosJuego(s);
+				RecibirDatosJuego recibir = new RecibirDatosJuego(s);
+			}
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

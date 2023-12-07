@@ -16,6 +16,7 @@ public class Cliente {
 	private static String ip;
 	private static int miPuerto = 8888;
 	private Boolean disponible = true;
+	private static String nickn;
 
 	public static void main(String[] args) {
 		Cliente c = new Cliente();
@@ -27,7 +28,7 @@ public class Cliente {
 			ip = InetAddress.getLocalHost().toString().split("/")[1];
 
 			System.out.println("Escribe tu nickname: ");
-			String nickn = scanner.nextLine();
+			nickn = scanner.nextLine();
 			conectarse_y_listaJ(nickn, dout, ooin);
 
 		} catch (UnknownHostException e) {
@@ -40,6 +41,7 @@ public class Cliente {
 		// Despues de recibir la lista y elegir un jugador, esperamos a poder
 		// conectarnos/recibir
 		ExecutorService pool = Executors.newCachedThreadPool();
+		pool.execute(new EscucharInvitaciones(c));
 		menu(pool, c);
 	}
 
@@ -83,7 +85,7 @@ public class Cliente {
 				int n2 = scan.nextInt();
 				int puertoJ2 = Integer.parseInt(listaJugadores.get(n2).get(1));
 				String ipJ2 = listaJugadores.get(n2).get(0);
-				MandarSolicitudConex solicitud2 = new MandarSolicitudConex(c, ipJ2, puertoJ2);
+				MandarSolicitudConex solicitud2 = new MandarSolicitudConex(c, ipJ2, puertoJ2, pool);
 				pool.execute(solicitud2);
 				break;
 			case 3:// AceptarSolicitud
@@ -91,7 +93,7 @@ public class Cliente {
 				int n3 = scan.nextInt();
 				int puertoJ3 = Integer.parseInt(listaInvitaciones.get(n3).get(1));
 				String ipJ3 = listaInvitaciones.get(n3).get(0);
-				ConectarConJugador concectar3 = new ConectarConJugador(c, ipJ3, puertoJ3);
+				ConectarConJugador concectar3 = new ConectarConJugador(c, ipJ3, puertoJ3, pool);
 				pool.execute(concectar3);
 				break;
 			default:
@@ -103,8 +105,7 @@ public class Cliente {
 	}
 
 	private static void mostrar_lista_jugadores() {
-		System.out.println(
-				"_________________________________________________\n    LISTA DE JUGADORES CONECTADOS");
+		System.out.println("_________________________________________________\n    LISTA DE JUGADORES CONECTADOS");
 		if (listaJugadores != null) {
 			for (Entry<Integer, List<String>> entry : listaJugadores.entrySet()) {
 				System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
@@ -115,8 +116,7 @@ public class Cliente {
 	}
 
 	private static void mostrar_lista_invitaciones() {
-		System.out.println(
-				"_________________________________________________\n    LISTA DE SOLICITUDES");
+		System.out.println("_________________________________________________\n    LISTA DE SOLICITUDES");
 		if (listaInvitaciones != null) {
 			for (Entry<Integer, List<String>> entry : listaInvitaciones.entrySet()) {
 				System.out.println(entry.getKey() + " -- " + entry.getValue().get(2).toString());
@@ -140,6 +140,23 @@ public class Cliente {
 
 	public String getip() {
 		return ip;
+	}
+
+	public String getNick() {
+		return nickn;
+	}
+
+	public void add_lista_invitaciones(String ip, String puerto, String nick) {
+		ArrayList<String> nuevaInvi = new ArrayList<String>();
+		nuevaInvi.add(ip);
+		nuevaInvi.add(puerto);
+		nuevaInvi.add(nick);
+		listaInvitaciones.put(listaInvitaciones.size(), nuevaInvi);
+	}
+
+	public void add_lista_invitaciones(ArrayList<String> datos) {
+
+		listaInvitaciones.put(listaInvitaciones.size(), datos);
 	}
 
 }
