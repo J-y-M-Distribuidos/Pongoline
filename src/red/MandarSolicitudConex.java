@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
-
+/*Aqui mendas la solicitud de conexion a uno de los clientes deisponibles de la lista de direcciones.*/
 public class MandarSolicitudConex implements Runnable {
 
 	private Cliente mi_cliente;
@@ -51,6 +51,8 @@ public class MandarSolicitudConex implements Runnable {
 				timer.cancel();
 				EnviarDatosJuego mandar = new EnviarDatosJuego(s);
 				RecibirDatosJuego recibir = new RecibirDatosJuego(s);
+				pool.execute(mandar);
+				pool.execute(recibir);
 			}
 
 		} catch (UnknownHostException e) {
@@ -65,5 +67,5 @@ public class MandarSolicitudConex implements Runnable {
 /*
  * SOLO MANDA UNA SOLICITUD AL CLIENTE, Y SE QUEDA ESPERANDO A QUE LE RESPONDA.
  * SI LE RESPONDE ENTONCES YA ES CUANDO EMPEZAMOS A JUGAR. SINO ESPERA
- * INDEFINIDAMENTE (cambiar esto ultimo)
+ * 5min
  */
