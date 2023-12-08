@@ -71,5 +71,5 @@ public class EnviarDatosJuego implements Runnable {
 	
 	/*Podriamos haber hecho un while donde se manda la posicion todo el rato, 
 	 *pero no sabemos si se va a ejecutar en el intervalo de tiempo que queremos.
-	 *Esperemos que esto no afecte mucho a la eficiencia.*/
+	 *Esperemos  que esto no afecte mucho a la eficiencia.*/
 }

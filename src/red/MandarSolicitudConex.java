@@ -44,7 +44,7 @@ public class MandarSolicitudConex implements Runnable {
 					System.exit(0);
 
 				}
-			}, 5 * 60 * 100);
+			}, 5 * 60 * 1000);
 			
 			String res = buffIn.readLine();
 			if (res == "Si") {

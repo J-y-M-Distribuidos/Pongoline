@@ -11,10 +11,10 @@ import java.util.concurrent.Executors;
 
 public class Cliente {
 
-	private static HashMap<Integer, List<String>> listaJugadores = null;
-	private static HashMap<Integer, List<String>> listaInvitaciones = null;
+	private static HashMap<Integer, List<String>> listaJugadores = new HashMap<Integer, List<String>>();
+	private static HashMap<Integer, List<String>> listaInvitaciones = new HashMap<Integer, List<String>>();
 	private static String ip;
-	private static int miPuerto = 8888;
+	private static int miPuerto = 8889;
 	private Boolean disponible = true;
 	private static String nickn;
 
@@ -155,7 +155,7 @@ public class Cliente {
 	}
 
 	public void add_lista_invitaciones(ArrayList<String> datos) {
-
+		
 		listaInvitaciones.put(listaInvitaciones.size(), datos);
 	}
 
