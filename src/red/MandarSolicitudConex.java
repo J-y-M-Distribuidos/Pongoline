@@ -47,7 +47,7 @@ public class MandarSolicitudConex implements Runnable, Serializable {
 			}, 5 * 60 * 10000);
 			String res;
 			res = buffIn.readLine();//SE SUPONE QUE ESTO BLOQUEA. PORQUE  NO LO LEE BIEN?
-			if (res == null) {
+			if (res == "Si") { //deberia ser distinto de nulo, lo he cambiado para ver si se conecta.
 				timer.cancel();
 				EnviarDatosJuego mandar = new EnviarDatosJuego(s);
 				RecibirDatosJuego recibir = new RecibirDatosJuego(s);
