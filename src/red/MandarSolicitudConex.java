@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 /*Aqui mendas la solicitud de conexion a uno de los clientes deisponibles de la lista de direcciones.*/
-public class MandarSolicitudConex implements Runnable {
+public class MandarSolicitudConex implements Runnable, Serializable {
 
 	private Cliente mi_cliente;
 	private String ipExt;
@@ -33,7 +33,7 @@ public class MandarSolicitudConex implements Runnable {
 			misDatos.add(mi_cliente.getNick());
 			
 			oout.writeObject(misDatos);//Jugamos?
-			
+			System.out.println("eSPERA CABRR");
 
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {// Espera 5 minutos a que me acepte, sino me voy.
@@ -44,10 +44,10 @@ public class MandarSolicitudConex implements Runnable {
 					System.exit(0);
 
 				}
-			}, 5 * 60 * 1000);
-			
-			String res = buffIn.readLine();
-			if (res == "Si") {
+			}, 5 * 60 * 10000);
+			String res;
+			res = buffIn.readLine();//SE SUPONE QUE ESTO BLOQUEA. PORQUE  NO LO LEE BIEN?
+			if (res == null) {
 				timer.cancel();
 				EnviarDatosJuego mandar = new EnviarDatosJuego(s);
 				RecibirDatosJuego recibir = new RecibirDatosJuego(s);

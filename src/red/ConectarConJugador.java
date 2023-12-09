@@ -33,7 +33,7 @@ public class ConectarConJugador implements Runnable {
 		try (Socket s = new Socket(ipExt, portExt);//Nos conectamos al otro cliente.
 				DataOutputStream dout = new DataOutputStream(s.getOutputStream());) {
 			
-			dout.writeBytes("Si\n");
+			dout.writeBytes("Si\n");//ESCRIBE UN SI PERO NO LE LLEGA.
 			pool.execute(new EnviarDatosJuego(s));
 			pool.execute(new RecibirDatosJuego(s));
 

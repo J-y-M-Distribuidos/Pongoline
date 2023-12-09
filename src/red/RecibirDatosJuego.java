@@ -16,7 +16,7 @@ public class RecibirDatosJuego implements Runnable {
 	@Override
 	public void run() {
 		
-		try (DataInputStream din = new DataInputStream(socket.getInputStream());){
+		try (DataInputStream din = new DataInputStream(socket.getInputStream());){ //aqui
 			while (true) {
 				datos = din.readByte();
 				System.out.println(datos);

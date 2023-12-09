@@ -24,7 +24,7 @@ public class EscucharInvitaciones implements Runnable {
 			while (true) {
 				try (Socket s = serverC.accept();
 						BufferedReader buffin = new BufferedReader(new InputStreamReader(s.getInputStream()));
-						ObjectInputStream oin = new ObjectInputStream(s.getInputStream());) {
+						ObjectInputStream oin = new ObjectInputStream(s.getInputStream());) { //aqui
 					
 					cliente.add_lista_invitaciones((ArrayList<String>)oin.readObject());
 					
