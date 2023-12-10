@@ -12,6 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 
+import juego_offline.Juego;
+
 /*En esta clase es donde decides a que cliente conectarte de la lista de clientes disponible.*/
 public class ConectarConJugador implements Runnable {
 	private Cliente mi_cliente;
@@ -30,19 +32,21 @@ public class ConectarConJugador implements Runnable {
 	public void run() {//Vamos a presuponer que el otro sigue activo escuchando.
 
 
-		try (Socket s = new Socket(ipExt, portExt);//Nos conectamos al otro cliente.
-				DataOutputStream dout = new DataOutputStream(s.getOutputStream());) {
+		try {Socket s = new Socket(ipExt, portExt);//Nos conectamos al otro cliente.
+				DataOutputStream dout = new DataOutputStream(s.getOutputStream()); 
 			
-			dout.writeBytes("Si\n");//ESCRIBE UN SI PERO NO LE LLEGA.
-			pool.execute(new EnviarDatosJuego(s));
-			pool.execute(new RecibirDatosJuego(s));
-
+			dout.writeBytes("Si\n");
+			pool.execute(new EnviarDatosJuego(s)); //NO CERRAR EL SOCKET 
+			pool.execute(new RecibirDatosJuego(s));//NO CERRAR EL SOCKET
+			Juego juego  = new Juego();//Runea el juego.
+			juego.main(null);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-	}
+	}/*OJO QUE NO CERRAMOS EL SOCKET PORQUE NUNCA DEJAMOS DE JUGAR, SI IMPLEMENTAMOS UN LIMITE DE PUNTOS
+	POR PARTIDA, AHI ES DONDE CERRARIAMOS EL SOCKET.*/
 
 }

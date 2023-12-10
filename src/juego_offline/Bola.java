@@ -5,7 +5,7 @@ import java.util.*;
 import javax.swing.*;
 import java.lang.Math;
 public class Bola extends Rectangle{
-	Random random;
+	Random random= new Random(100); //Ponemos semilla para que la bola salga en una secuencia "aleatoria"
 	int xVelocity;
 	int yVelocity;
 	int velocidad = 4;

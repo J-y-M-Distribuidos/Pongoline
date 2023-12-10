@@ -9,6 +9,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 
+import juego_offline.Juego;
+
 public class EsperarConexion implements Runnable{
 
 	private Cliente cliente;
@@ -36,11 +38,14 @@ public class EsperarConexion implements Runnable{
 				timer.cancel();
 				String res;
 				res = buffIn.readLine();// SE SUPONE QUE ESTO BLOQUEA. PORQUE NO LO LEE BIEN?
+				System.out.println(res);
 				if (res == "Si") {
 					EnviarDatosJuego mandar = new EnviarDatosJuego(s);
 					RecibirDatosJuego recibir = new RecibirDatosJuego(s);
 					pool.execute(mandar);
 					pool.execute(recibir);
+					Juego juego  = new Juego();//Runea el juego.
+					juego.main(null);
 				}
 			}
 			

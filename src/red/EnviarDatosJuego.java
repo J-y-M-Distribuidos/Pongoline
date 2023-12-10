@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.*;
 //Esta es la clase donde mandamos lo que queremos que haga nuestra pala en juego del oponente.
+
 public class EnviarDatosJuego implements Runnable {
 
 	private Socket socket;
@@ -17,22 +18,24 @@ public class EnviarDatosJuego implements Runnable {
 	public EnviarDatosJuego(Socket s) {
 		this.socket = s;
 	}
-
+	/*[[IMPORTANTE]]
+	 * EL DATA-OUTPUT-STREAM ¡¡¡¡NO!!! SE PONE EN EL TRY WITH RESOURCES PORQUE ME CIERRA EL SOCKET Y NO LO PUEDO USAR MAS. 
+	 * [[IMPORTANTE]]*/
+	//NO CERRAR EL SOCKET
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		try (DataOutputStream dout = new DataOutputStream(socket.getOutputStream());){
+		try {
+			DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
 			Timer t = new Timer();
 			t.scheduleAtFixedRate(new TimerTask() {
 				
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					mandarDatos(dout);
 				}
 			}, 0L, 3L);//Mandamos datos cada 3 ms. Asi es un flujo constante.
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 
@@ -72,4 +75,5 @@ public class EnviarDatosJuego implements Runnable {
 	/*Podriamos haber hecho un while donde se manda la posicion todo el rato, 
 	 *pero no sabemos si se va a ejecutar en el intervalo de tiempo que queremos.
 	 *Esperemos  que esto no afecte mucho a la eficiencia.*/
+
 }

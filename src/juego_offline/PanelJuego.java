@@ -16,7 +16,6 @@ public class PanelJuego extends JPanel implements Runnable {
 	Thread juegoThread;
 	Image image;
 	Graphics graphics;
-	Random random;
 	Raqueta pala1;
 	Raqueta pala2;
 	Bola bola;
@@ -36,7 +35,6 @@ public class PanelJuego extends JPanel implements Runnable {
 
 	// Crea una nueva bola en caso de que queramos resetear la actual.
 	public void newBola() {
-		random = new Random();
 		bola = new Bola((GAME_WIDTH / 2) - (BOLA_DIMAETER / 2), (GAME_HEIGHT / 2) - (BOLA_DIMAETER / 2), BOLA_DIMAETER);
 	}
 
