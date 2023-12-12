@@ -38,8 +38,8 @@ public class ConectarConJugador implements Runnable {
 			dout.writeBytes("Si\n");
 			pool.execute(new EnviarDatosJuego(s)); //NO CERRAR EL SOCKET 
 			pool.execute(new RecibirDatosJuego(s));//NO CERRAR EL SOCKET
-			Juego juego  = new Juego();//Runea el juego.
-			juego.main(null);
+			//Juego juego  = new Juego();//Runea el juego.
+			//juego.main(null);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

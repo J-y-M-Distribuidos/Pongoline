@@ -66,6 +66,7 @@ public class Cliente {
 
 	public static void menu(ExecutorService pool, Cliente c) {
 		Boolean salir = false;
+
 		while (!salir) {
 			System.out.println("|||||||||||||||||||||||||||||||||||||||||||||");
 			System.out.println(
@@ -87,6 +88,7 @@ public class Cliente {
 				String ipJ2 = listaJugadores.get(n2).get(0);
 				MandarSolicitudConex solicitud2 = new MandarSolicitudConex(c, ipJ2, puertoJ2, pool);
 				pool.execute(solicitud2);
+				salir = true;
 				break;
 			case 3:// AceptarSolicitud
 				System.out.println("Numero del jugador: ");
@@ -95,12 +97,12 @@ public class Cliente {
 				String ipJ3 = listaInvitaciones.get(n3).get(0);
 				ConectarConJugador concectar3 = new ConectarConJugador(c, ipJ3, puertoJ3, pool);
 				pool.execute(concectar3);
+				salir = true;
 				break;
 			default:
-				salir = true;
+				System.exit(0);
 			}
 		}
-		System.exit(0);
 
 	}
 
@@ -155,7 +157,7 @@ public class Cliente {
 	}
 
 	public void add_lista_invitaciones(ArrayList<String> datos) {
-		
+
 		listaInvitaciones.put(listaInvitaciones.size(), datos);
 	}
 

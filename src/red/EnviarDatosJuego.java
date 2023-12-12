@@ -8,7 +8,12 @@ import java.net.*;
 import java.util.*;
 //Esta es la clase donde mandamos lo que queremos que haga nuestra pala en juego del oponente.
 
-public class EnviarDatosJuego implements Runnable {
+import javax.swing.JPanel;
+
+import juego_offline.MarcoJuego;
+import juego_offline.PanelJuego.AL;
+
+public class EnviarDatosJuego extends JPanel implements Runnable {
 
 	private Socket socket;
 	protected int tPulsada = 1;
@@ -17,6 +22,9 @@ public class EnviarDatosJuego implements Runnable {
 
 	public EnviarDatosJuego(Socket s) {
 		this.socket = s;
+		
+		this.addKeyListener(new AL());
+		setFocusable(true);
 	}
 	/*[[IMPORTANTE]]
 	 * EL DATA-OUTPUT-STREAM ¡¡¡¡NO!!! SE PONE EN EL TRY WITH RESOURCES PORQUE ME CIERRA EL SOCKET Y NO LO PUEDO USAR MAS. 
@@ -24,16 +32,18 @@ public class EnviarDatosJuego implements Runnable {
 	//NO CERRAR EL SOCKET
 	@Override
 	public void run() {
+		MarcoJuego juego = new MarcoJuego();
 		try {
 			DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
 			Timer t = new Timer();
-			t.scheduleAtFixedRate(new TimerTask() {
+			t.scheduleAtFixedRate(new TimerTask() {//de momento no paramos la ejecucion.
 				
 				@Override
 				public void run() {
 					mandarDatos(dout);
+					
 				}
-			}, 0L, 3L);//Mandamos datos cada 3 ms. Asi es un flujo constante.
+			}, 0L, 10000L);//Mandamos datos cada 3 ms. Asi es un flujo constante.
 		} catch (IOException e) {
 		
 			e.printStackTrace();
@@ -41,15 +51,23 @@ public class EnviarDatosJuego implements Runnable {
 
 	}
 	public void mandarDatos(DataOutputStream dout){
+		//System.out.println("holaa");
 		if(mandar==true) {
 				try {
-					dout.writeByte(tPulsada);
-					dout.writeByte(tSoltada);
+					dout.writeBytes(tPulsada +"/n");
+					dout.writeBytes(tSoltada +"/n");
 					mandar=false;
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			
+			}else {
+				try {
+					dout.writeBytes("no detecta las teclas\n");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		
 		
@@ -57,8 +75,10 @@ public class EnviarDatosJuego implements Runnable {
 	}
 	public class AL extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
+			System.out.println(tPulsada+ "    -Pulsada.");
 			if(e.getKeyCode()==KeyEvent.VK_W || e.getKeyCode()==KeyEvent.VK_A || e.getKeyCode()==KeyEvent.VK_S || e.getKeyCode()==KeyEvent.VK_D) {
 				tPulsada = e.getKeyCode();
+				System.out.println(tPulsada+ "    -Pulsada.");
 				mandar= true;
 			}
 		}
@@ -66,6 +86,7 @@ public class EnviarDatosJuego implements Runnable {
 		public void keyReleased(KeyEvent e) {
 			if(e.getKeyCode()==KeyEvent.VK_W || e.getKeyCode()==KeyEvent.VK_A || e.getKeyCode()==KeyEvent.VK_S || e.getKeyCode()==KeyEvent.VK_D) {
 				tSoltada = e.getKeyCode();
+				System.out.println(tSoltada + "    -Soltada.");
 				mandar = true;
 			}
 		}

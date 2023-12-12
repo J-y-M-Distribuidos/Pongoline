@@ -11,17 +11,19 @@ import java.util.concurrent.ExecutorService;
 
 import juego_offline.Juego;
 
-public class EsperarConexion implements Runnable{
+public class EsperarConexion implements Runnable {
 
 	private Cliente cliente;
 	private static ExecutorService pool;
+
 	public EsperarConexion(Cliente c, ExecutorService piscina) {
 		cliente = c;
 		pool = piscina;
 	}
+
 	@Override
 	public void run() {
-		try (ServerSocket ss = new ServerSocket(cliente.getPuerto()+7);) {
+		try (ServerSocket ss = new ServerSocket(cliente.getPuerto() + 7);) {
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {// Espera 50 minutos a que me acepte, sino me voy.
 
@@ -32,27 +34,30 @@ public class EsperarConexion implements Runnable{
 
 				}
 			}, 5 * 60 * 10000);
-			try (Socket s = ss.accept();
-					BufferedReader buffIn = new BufferedReader(new InputStreamReader(s.getInputStream()));){
+			try {
+				Socket s = ss.accept();
+				BufferedReader buffIn = new BufferedReader(new InputStreamReader(s.getInputStream()));
 				System.out.println("Han aceptado la solicitud.");
 				timer.cancel();
 				String res;
-				res = buffIn.readLine();// SE SUPONE QUE ESTO BLOQUEA. PORQUE NO LO LEE BIEN?
+				res = buffIn.readLine();
 				System.out.println(res);
-				if (res == "Si") {
-					EnviarDatosJuego mandar = new EnviarDatosJuego(s);
-					RecibirDatosJuego recibir = new RecibirDatosJuego(s);
-					pool.execute(mandar);
-					pool.execute(recibir);
-					Juego juego  = new Juego();//Runea el juego.
-					juego.main(null);
-				}
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
+				if (res.equals("Si")) {
 
+					pool.execute(new EnviarDatosJuego(s));
+					pool.execute(new RecibirDatosJuego(s));
+					// Juego juego = new Juego();//Runea el juego.
+					// juego.main(null);
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
 }
