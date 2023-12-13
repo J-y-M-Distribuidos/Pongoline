@@ -1,6 +1,8 @@
 package juego_offline;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.*;
 import javax.swing.*;
 
@@ -20,8 +22,10 @@ public class PanelJuego extends JPanel implements Runnable {
 	Raqueta pala2;
 	Bola bola;
 	Puntos puntos;
+	DataOutputStream aver;
 
-	public PanelJuego() {
+	public PanelJuego(DataOutputStream aver2) {
+		aver = aver2;
 		newPala();
 		newBola();
 		puntos = new Puntos(GAME_WIDTH, GAME_HEIGHT);
@@ -41,9 +45,9 @@ public class PanelJuego extends JPanel implements Runnable {
 	// Crea nuevas palas para los jugadores en caso de que queramos resetear las
 	// actuales.
 	public void newPala() {
-		pala1 = new Raqueta(10, (GAME_HEIGHT / 2) - (RAQUETA_HEIGHT / 2), RAQUETA_WIDTH, RAQUETA_HEIGHT, 1);
+		pala1 = new Raqueta(10, (GAME_HEIGHT / 2) - (RAQUETA_HEIGHT / 2), RAQUETA_WIDTH, RAQUETA_HEIGHT, 1, aver);
 		pala2 = new Raqueta((GAME_WIDTH - RAQUETA_WIDTH) - 10, (GAME_HEIGHT / 2) - (RAQUETA_HEIGHT / 2), RAQUETA_WIDTH,
-				RAQUETA_HEIGHT, 2);
+				RAQUETA_HEIGHT, 2,aver);
 
 	}
 
@@ -175,12 +179,13 @@ public class PanelJuego extends JPanel implements Runnable {
 		public void keyPressed(KeyEvent e) {
 			pala1.keyPressed(e);
 			pala2.keyPressed(e);
-			//enviar desde aqui
+			
 		}
 
 		public void keyReleased(KeyEvent e) {
 			pala1.keyReleased(e);
 			pala2.keyReleased(e);
+			
 		}
 	}
 }

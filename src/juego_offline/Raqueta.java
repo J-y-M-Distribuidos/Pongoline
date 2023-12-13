@@ -1,6 +1,9 @@
 package juego_offline;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.*;
 import javax.swing.*;
 
@@ -10,57 +13,83 @@ public class Raqueta extends Rectangle {
 	int yVelocity;
 	int xVelocity;
 	int velocidad = 5;
+	DataOutputStream aver;
+
 	/*
 	 * Posicion x, Posicion y, Ancho, Alto e Identificador
 	 */
-	public Raqueta(int x, int y, int width, int height, int id) {
-		super(x,y,width,height);
-		
+	public Raqueta(int x, int y, int width, int height, int id, DataOutputStream aver3) {
+		super(x, y, width, height);
+		aver = aver3;
 		this.id = id;
 	}
 
 	public void keyPressed(KeyEvent e) {
-		switch(id) {
+		switch (id) {
 		case 1:
-			//Si pulsamos la W...
-			if(e.getKeyCode()==KeyEvent.VK_W) {
+			// Si pulsamos la W...
+			if (e.getKeyCode() == KeyEvent.VK_W) {
 				setYDirection(-velocidad);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			//Si pulsamos la S...
-			if(e.getKeyCode()==KeyEvent.VK_S) {
+			// Si pulsamos la S...
+			if (e.getKeyCode() == KeyEvent.VK_S) {
 				setYDirection(velocidad);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			//Si pulsamos la A...
-			if(e.getKeyCode()==KeyEvent.VK_A) {
+			// Si pulsamos la A...
+			if (e.getKeyCode() == KeyEvent.VK_A) {
 				setXDirection(-velocidad);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			//Si pulsamos la D...
-			if(e.getKeyCode()==KeyEvent.VK_D) {
+			// Si pulsamos la D...
+			if (e.getKeyCode() == KeyEvent.VK_D) {
 				setXDirection(velocidad);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			break;
 		case 2:
-			//Si pulsamos la UP...
-			if(e.getKeyCode()==KeyEvent.VK_UP) {
+			// Si pulsamos la UP...
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				setYDirection(-velocidad);
 				move();
 			}
-			//Si pulsamos la DOWN...
-			if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+			// Si pulsamos la DOWN...
+			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				setYDirection(velocidad);
 				move();
 			}
-			//Si pulsamos la LEFT...
-			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			// Si pulsamos la LEFT...
+			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				setXDirection(-velocidad);
 				move();
 			}
-			//Si pulsamos la RIGHT...
-			if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			// Si pulsamos la RIGHT...
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				setXDirection(velocidad);
 				move();
 			}
@@ -69,47 +98,75 @@ public class Raqueta extends Rectangle {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		switch(id) {
+		switch (id) {
 		case 1:
-			//Si soltamos la W...
-			if(e.getKeyCode()==KeyEvent.VK_W) {
+			// Si soltamos la W...
+			if (e.getKeyCode() == KeyEvent.VK_W) {
 				setYDirection(0);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+					System.out.println("mando la - "+e.getKeyChar());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			//Si soltamos la S...
-			if(e.getKeyCode()==KeyEvent.VK_S) {
+			// Si soltamos la S...
+			if (e.getKeyCode() == KeyEvent.VK_S) {
 				setYDirection(0);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+					System.out.println("mando la - "+e.getKeyChar());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			//Si soltamos la A...
-			if(e.getKeyCode()==KeyEvent.VK_A) {
+			// Si soltamos la A...
+			if (e.getKeyCode() == KeyEvent.VK_A) {
 				setXDirection(0);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+					System.out.println("mando la - "+e.getKeyChar());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			//Si soltamos la D...
-			if(e.getKeyCode()==KeyEvent.VK_D) {
+			// Si soltamos la D...
+			if (e.getKeyCode() == KeyEvent.VK_D) {
 				setXDirection(0);
 				move();
+				try {
+					aver.writeBytes(e.getKeyCode() + "\n");
+					System.out.println("mando la - "+e.getKeyChar());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			break;
 		case 2:
-			//Si soltamos la UP...
-			if(e.getKeyCode()==KeyEvent.VK_UP) {
+			// Si soltamos la UP...
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				setYDirection(0);
 				move();
 			}
-			//Si soltamos la DOWN...
-			if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+			// Si soltamos la DOWN...
+			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				setYDirection(0);
 				move();
 			}
-			//Si soltamos la LEFT...
-			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			// Si soltamos la LEFT...
+			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				setXDirection(0);
 				move();
 			}
-			//Si soltamos la RIGHT...
-			if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			// Si soltamos la RIGHT...
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				setXDirection(0);
 				move();
 			}
@@ -121,25 +178,25 @@ public class Raqueta extends Rectangle {
 	public void setYDirection(int yDirection) {
 		this.yVelocity = yDirection;
 	}
-	
-	//O no... eheh
+
+	// O no... eheh
 	public void setXDirection(int xDirection) {
-		this.xVelocity= xDirection;
+		this.xVelocity = xDirection;
 	}
-	//Mueve las palas una direccion
+
+	// Mueve las palas una direccion
 	public void move() {
 		this.x += xVelocity;
 		this.y += yVelocity;
 	}
 
 	public void draw(Graphics g) {
-		if(id==1) {
+		if (id == 1) {
 			g.setColor(Color.MAGENTA);
-		
-		}else {
+
+		} else {
 			g.setColor(Color.YELLOW);
 		}
 		g.fillRect(this.x, this.y, this.width, this.height);
 	}
-	}
-	
+}

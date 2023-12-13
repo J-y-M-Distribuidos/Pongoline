@@ -32,19 +32,21 @@ public class EnviarDatosJuego extends JPanel implements Runnable {
 	//NO CERRAR EL SOCKET
 	@Override
 	public void run() {
-		MarcoJuego juego = new MarcoJuego();
+		
 		try {
 			DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
-			Timer t = new Timer();
+			MarcoJuego juego = new MarcoJuego(dout);
+			/*Timer t = new Timer();
 			t.scheduleAtFixedRate(new TimerTask() {//de momento no paramos la ejecucion.
 				
 				@Override
 				public void run() {
+				
 					mandarDatos(dout);
 					
 				}
-			}, 0L, 10000L);//Mandamos datos cada 3 ms. Asi es un flujo constante.
-		} catch (IOException e) {
+			}, 0L, 300L);//Mandamos datos cada 3 ms. Asi es un flujo constante.
+		*/} catch (IOException e) {
 		
 			e.printStackTrace();
 		}

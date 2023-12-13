@@ -32,8 +32,44 @@ public class RecibirDatosJuego implements Runnable {
 				robot.keyPress(datos);
 				robot.keyRelease(datos);
 				System.out.println(datos);*/
-				String hola = buffIn.readLine();
-				System.out.println(hola);
+			String hola = buffIn.readLine();
+				
+				System.out.println("he recibido "+hola);
+				int tecla = Integer.parseInt(hola);
+				if(tecla ==KeyEvent.VK_W){
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyPress(KeyEvent.VK_UP);
+					robot.keyRelease(KeyEvent.VK_UP);
+				}
+				if(tecla == KeyEvent.VK_A){
+					robot.keyPress(KeyEvent.VK_LEFT);
+					robot.keyPress(KeyEvent.VK_LEFT);
+					robot.keyPress(KeyEvent.VK_LEFT);
+					robot.keyPress(KeyEvent.VK_LEFT);
+					robot.keyPress(KeyEvent.VK_LEFT);
+					robot.keyPress(KeyEvent.VK_LEFT);
+					robot.keyRelease(KeyEvent.VK_LEFT);
+				}
+				if(tecla == KeyEvent.VK_S){
+					robot.keyPress(KeyEvent.VK_DOWN);
+					robot.keyPress(KeyEvent.VK_DOWN);
+					robot.keyPress(KeyEvent.VK_DOWN);
+					robot.keyPress(KeyEvent.VK_DOWN);
+					robot.keyPress(KeyEvent.VK_DOWN);
+					robot.keyPress(KeyEvent.VK_DOWN);
+					robot.keyRelease(KeyEvent.VK_DOWN);
+				}
+				if(tecla == KeyEvent.VK_D){
+					robot.keyPress(KeyEvent.VK_RIGHT);
+					robot.keyPress(KeyEvent.VK_RIGHT);
+					robot.keyPress(KeyEvent.VK_RIGHT);
+					robot.keyPress(KeyEvent.VK_RIGHT);
+					robot.keyRelease(KeyEvent.VK_RIGHT);
+				}
 				
 			}
 		} catch (IOException e ) {
@@ -44,3 +80,4 @@ public class RecibirDatosJuego implements Runnable {
 
 	}
 }
+//0x57(W) 0x41(A) 0x53(S) 0x44(D)

@@ -3,13 +3,15 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.DataOutputStream;
 //Esto es el marco alrededor del juego
 public class MarcoJuego extends JFrame{
 
 	PanelJuego panel;
-	
-	public MarcoJuego() {
-		panel = new PanelJuego();
+	DataOutputStream aver;
+	public MarcoJuego(DataOutputStream aver1) {
+		aver = aver1;
+		panel = new PanelJuego(aver1);
 		this.add(panel);
 		this.setTitle("Pong");
 		this.setResizable(false);
