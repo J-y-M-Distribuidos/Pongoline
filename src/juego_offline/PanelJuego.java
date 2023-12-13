@@ -175,6 +175,7 @@ public class PanelJuego extends JPanel implements Runnable {
 		public void keyPressed(KeyEvent e) {
 			pala1.keyPressed(e);
 			pala2.keyPressed(e);
+			//enviar desde aqui
 		}
 
 		public void keyReleased(KeyEvent e) {
