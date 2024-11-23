@@ -14,7 +14,7 @@ public class Cliente {
 	private static HashMap<Integer, List<String>> listaJugadores = new HashMap<Integer, List<String>>();
 	private static HashMap<Integer, List<String>> listaInvitaciones = new HashMap<Integer, List<String>>();
 	private static String ip;
-	private static int miPuerto = 8888;
+	private static int miPuerto = 7899;
 	private Boolean disponible = true;
 	private static String nickn;
 

@@ -7,7 +7,7 @@ public class Juego {
 
 	public static void main(String[] args) {
 
-		//MarcoJuego marco = new MarcoJuego();		
+		//MarcoJuego marco = new MarcoJuego(null);		
 
 	}
 

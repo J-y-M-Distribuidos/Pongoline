@@ -9,6 +9,7 @@ public class MarcoJuego extends JFrame{
 
 	PanelJuego panel;
 	DataOutputStream aver;
+	
 	public MarcoJuego(DataOutputStream aver1) {
 		aver = aver1;
 		panel = new PanelJuego(aver1);

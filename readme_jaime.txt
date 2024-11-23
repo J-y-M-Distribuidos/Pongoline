@@ -1,7 +1,4 @@
-# Pongoline
-Esta es una version en Java del famoso juego PONG de 1972 hecha para poder jugar multijuegador con tus amigos.
-
-##Para jugar a pongoline.
+Para jugar a pongoline.
 
 	1. Iniciar el servidor
 	2. Iniciar un cliente y ponerle nombre.
